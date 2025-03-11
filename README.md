@@ -40,32 +40,9 @@ kubectl apply -f mongo.yaml
 ```sh
 kubectl apply -f webapp.yaml
 ```
-### Step 3: Access the Application
-5. To access the web application, you need to get the Minikube IP and the NodePort.
 
-```sh
-minikube ip
-```
-```sh
-kubectl get svc webapp-service
-```
-### Use the Minikube IP and the NodePort to access the application in your browser. For example:
-```sh
-yoshi@yodaone ~/VSCode/K8s-demo$ minikube ip
-192.168.49.2
-
-yoshi@yodaone ~/VSCode/K8s-demo$ kubectl get svc -o wide
-NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE    SELECTOR
-kubernetes       ClusterIP   10.96.0.1       <none>        443/TCP          152m   <none>
-mongo-service    ClusterIP   10.105.172.29   <none>        27017/TCP        22m    app=mongo
-webapp-service   NodePort    10.101.3.177    <none>        3000:30100/TCP   21m    app=webapp
-```
-In this case, the Minikube IP is 192.168.49.2 and the NodePort is 30100. You can access the application in your browser using:
-``` sh
-http://192.168.49.2:30100
-```
-### Customizing the Application
-Using a Different Web Application Image
+### Step 3: Customizing the Application
+Using a Different Web Application Image. You can use any webapp to deploy as long it exists in the [Docker Hub](https://hub.docker.com/).
 The `webapp.yaml` file specifies the Docker image for the web application:
 
 ```YAML
@@ -84,6 +61,30 @@ containers:
   image: mongo:5.0
 ```
 You can change the image field to use a different version of MongoDB or your own custom image. Refer to the [MongoDB images on Docker Hub](https://hub.docker.com/_/mongo) for more options.
+### Step 4: Access the Application
+5. To access the web application, you need to get the Minikube IP and the NodePort.
+
+```sh
+minikube ip
+```
+```sh
+kubectl get svc webapp-service
+```
+### Step 5: Use the Minikube IP and the NodePort to access the application in your browser. For example:
+```sh
+yoshi@yodaone ~/VSCode/K8s-demo$ minikube ip
+192.168.49.2
+
+yoshi@yodaone ~/VSCode/K8s-demo$ kubectl get svc -o wide
+NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE    SELECTOR
+kubernetes       ClusterIP   10.96.0.1       <none>        443/TCP          152m   <none>
+mongo-service    ClusterIP   10.105.172.29   <none>        27017/TCP        22m    app=mongo
+webapp-service   NodePort    10.101.3.177    <none>        3000:30100/TCP   21m    app=webapp
+```
+In this case, the Minikube IP is 192.168.49.2 and the NodePort is 30100. You can access the application in your browser using:
+``` sh
+http://192.168.49.2:30100
+```
 ### Clean Up
 6. To delete the resources created for this demo, run the following commands:
 
